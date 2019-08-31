@@ -1,3 +1,23 @@
-<h2 id="title">Welcome to Ember</h2>
+<div>
+  {{this.greeting}}
+</div>
 
-{{outlet}}
+<div>
+  <button {{on "click" (set this.greeting "Hello!")}}>
+    English
+  </button>
+
+  <button
+    value="Hola!"
+    {{on "click" (set this.greeting (get _ "target.value"))}}
+  >
+    Español
+  </button>
+</div>
+
+<div>
+  count: {{this.count}}
+</div>
+<div>
+  <Counter @onUpdate={{set this.count _}} />
+</div>
