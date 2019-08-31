@@ -63,7 +63,7 @@ If you want to capture this value using the `set` helper, you can provide a
 _placeholder_, the `_` symbol, to the helper:
 
 ```hbs
-<Counter @onUpdate{{set this.count _}} />
+<Counter @onUpdate={{set this.count _}} />
 ```
 
 This placeholder will replaced by the first argument to the function when it is
