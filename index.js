@@ -5,7 +5,7 @@ module.exports = {
 
   setupPreprocessorRegistry(type, registry) {
     registry.add('htmlbars-ast-plugin', {
-      name: 'bind',
+      name: 'set-placeholder',
       plugin: require('./lib/set-placeholder-transform'),
       baseDir() {
         return __dirname;

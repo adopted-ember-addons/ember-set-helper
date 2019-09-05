@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 import { assert } from '@ember/debug';
 import { get, set as emberSet } from '@ember/object';
-import { Placeholder } from './__placeholder__';
+import { Placeholder } from './-set-placeholder';
 
 function set(positional) {
   let [target, key, valueOrPlaceholder] = positional;
