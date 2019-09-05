@@ -18,8 +18,8 @@ export class Placeholder {
   }
 }
 
-function __placeholder__() {
+function setPlaceholder() {
   return new Placeholder(null);
 }
 
-export default helper(__placeholder__);
+export default helper(setPlaceholder);
