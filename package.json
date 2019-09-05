@@ -7,7 +7,7 @@
   ],
   "repository": "",
   "license": "MIT",
-  "author": "",
+  "author": "https://github.com/pzuraq/ember-set-helper",
   "directories": {
     "doc": "doc",
     "test": "tests"
