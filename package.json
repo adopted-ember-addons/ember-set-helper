@@ -5,9 +5,9 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/pzuraq/ember-set-helper",
   "license": "MIT",
-  "author": "https://github.com/pzuraq/ember-set-helper",
+  "author": "Chris Garrett",
   "directories": {
     "doc": "doc",
     "test": "tests"
