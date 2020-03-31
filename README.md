@@ -66,7 +66,7 @@ _placeholder_, the `_` symbol, to the helper:
 <Counter @onUpdate={{set this.count _}} />
 ```
 
-This placeholder will replaced by the first argument to the function when it is
+This placeholder will be replaced by the first argument to the function when it is
 called. Placeholder syntax also works with Ember's built-in `{{get}}` helper:
 
 ```hbs
