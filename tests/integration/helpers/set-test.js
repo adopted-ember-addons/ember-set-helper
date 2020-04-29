@@ -70,4 +70,21 @@ module('Integration | Helper | set', function(hooks) {
 
     assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hola!');
   });
+
+  test('set helper works with argument', async function(assert) {
+    this.set('greeting', { hi: 'Hi!' });
+
+    this.owner.register('template:components/greeting', hbs`
+      <button
+        value="Hola!"
+        {{on "click" (set @greeting.hi (get _ "target.value"))}}
+      >
+        Español
+      </button>
+    `);
+    await render(hbs`<Greeting @greeting={{this.greeting}}/>`);
+
+    await click('button');
+    assert.equal(this.greeting.hi, 'Hola!');
+  });
 });
