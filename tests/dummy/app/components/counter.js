@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/counter';
+import { action } from '@ember/object';
 
 export default Component.extend({
   layout,
@@ -7,13 +8,11 @@ export default Component.extend({
   count: 0,
   onUpdate: null,
 
-  actions: {
-    updateCount() {
-      this.incrementProperty('count');
+  updateCount: action(function() {
+    this.incrementProperty('count');
 
-      if (this.onUpdate) {
-        this.onUpdate(this.count);
-      }
-    },
-  },
+    if (this.onUpdate) {
+      this.onUpdate(this.count);
+    }
+  }),
 });
