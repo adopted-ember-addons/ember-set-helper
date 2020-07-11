@@ -9,10 +9,7 @@ A better `mut` helper!
   English
 </button>
 
-<button
-  value="Hola!"
-  {{on "click" (set this.greeting (get _ "target.value"))}}
->
+<button {{on "click" (fn (set this.greeting) "Hola!")}}>
   Español
 </button>
 ```
@@ -30,21 +27,24 @@ handy:
 </button>
 ```
 
-You can also use object-key syntax:
+### Setting Passed Values
+
+If you do not provide a value to the `set` helper, it will set the value that is
+provided to it when called. For example:
 
 ```hbs
-<button {{on "click" (set this "greeting" "Hello!")}}>
-  English
-</button>
+<!-- app/components/counter.hbs -->
+{{this.count}}
+
+<button {{on "click" this.updateCount}}>Add 1</button>
 ```
 
-### Placeholders
-
-Oftentimes, you don't want to set a static value, but the value that is passed
-to upwards by an action or event handler. For instance, you may have a `Counter`
-component that sends an action whenever it updates its count:
-
 ```js
+// app/components/counter.js
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+
 export default class Counter extends Component {
   @tracked count = 0;
 
@@ -52,40 +52,58 @@ export default class Counter extends Component {
   updateCount() {
     this.count++;
 
-    if (this.args.onUpdate) {
-      this.args.onUpdate(this.count);
+    if (this.args.onClick) {
+      this.args.onClick(this.count);
     }
   }
 }
 ```
 
-If you want to capture this value using the `set` helper, you can provide a
-_placeholder_, the `_` symbol, to the helper:
-
 ```hbs
-<Counter @onUpdate={{set this.count _}} />
+<!-- usage -->
+<Counter @onClick={{set this.currentCount}} />
 ```
 
-This placeholder will be replaced by the first argument to the function when it is
-called. Placeholder syntax also works with Ember's built-in `{{get}}` helper:
+This will set the value of `this.currentCount` to whatever value is passed to it
+when it is called (in this case the `count` of the counter component whenever a
+user clicks the button).
+
+### Passing a dynamic path
+
+You can pass a path dynamically using the `path` named argument to the helper:
 
 ```hbs
-<button
-  value="Hola!"
-  {{on "click" (set this.greeting (get _ "target.value"))}}
->
-  Español
+<button {{on "click" (set this "Hello!" path=this.greetingPath)}}>
+  English
 </button>
 ```
 
-This allows you to get values off of objects that are passed to `{{set}}`,
-including native events passed to from the `{{on}}` modifier! In the future
-placeholder syntax may also be usable with other helpers, but for the time being
-only `{{get}}` is supported.
+### Picking values with `ember-composable-helpers`
 
-Placeholder syntax also only works within the `set` helper - elsewhere, the
-symbol will remain a standard path. If you happen to use `_` in your application
-today, installing `ember-set-helper` will not break your app.
+With the `{{action}}` helper and modifier, you could specify a value path using
+the `value` named argument:
+
+```hbs
+<input {{on "input" (action (mut this.value) value="target.value"))}}/>
+```
+
+You can accomplish the same thing with `{{set}}` by using the `{{pick}}` helper
+from [ember-composable-helpers](https://github.com/DockYard/ember-composable-helpers)
+to first pick the value off of the event, and then pass it to `{{set}}`:
+
+```hbs
+<input {{on "input" (pick "target.value" (set this.value))}}>
+```
+
+### Differences from `mut`
+
+- No need to call wrap the helper (e.g. `(set this.foo)` === `(fn (mut this.foo))`)
+- Optional last parameter if setting a static value (e.g. `(set this.foo "bar")` === `(fn (mut this.foo) "bar")`)
+- Cannot be used as both a getter and setter for the value, only provides a setter
+
+### Differences from `ember-set-helper`
+
+- No ability to use placeholder syntax
 
 ## Compatibility
 
@@ -96,7 +114,7 @@ today, installing `ember-set-helper` will not break your app.
 ## Installation
 
 ```
-ember install ember-set-helper
+ember install ember-simple-set-helper
 ```
 
 ## Contributing
