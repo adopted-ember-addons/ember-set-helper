@@ -3,11 +3,12 @@
 </div>
 
 <div>
-  <button {{on "click" (set this.greeting "Hello!")}}>
+  <button type="button" {{on "click" (set this.greeting "Hello!")}}>
     English
   </button>
 
   <button
+    type="button"
     value="Hola!"
     {{on "click" (set this.greeting (get _ "target.value"))}}
   >
