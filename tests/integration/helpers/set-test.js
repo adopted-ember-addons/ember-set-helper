@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, click } from '@ember/test-helpers';
+import { render, find, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import User from 'dummy/models/user';
 
 module('Integration | Helper | set', function(hooks) {
   setupRenderingTest(hooks);
@@ -10,7 +11,7 @@ module('Integration | Helper | set', function(hooks) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
-      <button {{on "click" (set this.greeting "Hello!")}}>
+      <button type="button" {{on "click" (set this.greeting "Hello!")}}>
         English
       </button>
     `);
@@ -22,26 +23,80 @@ module('Integration | Helper | set', function(hooks) {
     assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
   });
 
-  test('it works object-key syntax', async function(assert) {
+  test('it works on local paths', async function(assert) {
+    this.person = {};
+
     await render(hbs`
-      <span data-test-greeting>{{this.greeting}}</span>
+      <span data-test-greeting>{{this.person.name}}</span>
 
-      <button {{on "click" (set this "greeting" "Hello!")}}>
-        English
-      </button>
+      {{#let this.person as |person|}}
+        <button type="button" {{on "click" (set person.name "Liz")}}>
+          Set Name
+        </button>
+      {{/let}}
     `);
 
     assert.equal(find('[data-test-greeting]').textContent.trim(), '');
 
     await click('button');
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
+    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Liz');
   });
 
-  test('it works with placeholders', async function(assert) {
+  test('it works with a dynamic path', async function(assert) {
+    this.set('path', 'greeting1');
+
+    await render(hbs`
+      <span data-test-greeting1>{{this.greeting1}}</span>
+      <span data-test-greeting2>{{this.greeting2}}</span>
+
+      <button type="button" {{on "click" (set this "Hello!" path=this.path)}}>
+        Set Greeting
+      </button>
+    `);
+
+    assert.equal(find('[data-test-greeting1]').textContent.trim(), '');
+    assert.equal(find('[data-test-greeting2]').textContent.trim(), '');
+
+    await click('button');
+    assert.equal(find('[data-test-greeting1]').textContent.trim(), 'Hello!');
+
+    this.set('path', 'greeting2');
+    await click('button');
+
+    assert.equal(find('[data-test-greeting2]').textContent.trim(), 'Hello!');
+  });
+
+  test('it works with a dynamic path on a nested object', async function(assert) {
+    this.set('path', 'greeting1');
+    this.set('obj', {});
+
+    await render(hbs`
+      <span data-test-greeting1>{{this.obj.greeting1}}</span>
+      <span data-test-greeting2>{{this.obj.greeting2}}</span>
+
+      <button type="button" {{on "click" (set this.obj "Hello!" path=this.path)}}>
+        Set Greeting
+      </button>
+    `);
+
+    assert.equal(find('[data-test-greeting1]').textContent.trim(), '');
+    assert.equal(find('[data-test-greeting2]').textContent.trim(), '');
+
+    await click('button');
+
+    assert.equal(find('[data-test-greeting1]').textContent.trim(), 'Hello!');
+
+    this.set('path', 'greeting2');
+    await click('button');
+
+    assert.equal(find('[data-test-greeting2]').textContent.trim(), 'Hello!');
+  });
+
+  test('it works without a value', async function(assert) {
     await render(hbs`
       <span data-test-count>{{this.count}}</span>
-      <Counter @onUpdate={{set this.count _}} />
+      <Counter @onUpdate={{set this.count}} />
     `);
 
     assert.equal(find('[data-test-count]').textContent.trim(), '');
@@ -52,39 +107,31 @@ module('Integration | Helper | set', function(hooks) {
     assert.equal(find('[data-test-count]').textContent.trim(), '2');
   });
 
-  test('placeholders work with (get)', async function(assert) {
+  test('it works without a value on an object', async function(assert) {
+    this.set('user', User.create({ name: 'Alice' }));
+    await render(hbs`
+      <span data-test-name>{{this.user.name}}</span>
+      <Parent @user={{this.user}} />
+    `);
+
+    assert.dom('[data-test-name]').hasText('Alice');
+
+    await click('button');
+
+    assert.dom('[data-test-name]').hasText('Bob');
+  });
+
+  test('can pick a value using {{pick}} from ember-composable-helpers', async function(assert) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
-      <button
-        value="Hola!"
-        {{on "click" (set this.greeting (get _ "target.value"))}}
-      >
-        Español
-      </button>
+      <input {{on "input" (pick "target.value" (set this.greeting))}}>
     `);
 
     assert.equal(find('[data-test-greeting]').textContent.trim(), '');
 
-    await click('button');
+    await fillIn('input', 'Hello!');
 
-    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hola!');
-  });
-
-  test('set helper works with argument', async function(assert) {
-    this.set('greeting', { hi: 'Hi!' });
-
-    this.owner.register('template:components/greeting', hbs`
-      <button
-        value="Hola!"
-        {{on "click" (set @greeting.hi (get _ "target.value"))}}
-      >
-        Español
-      </button>
-    `);
-    await render(hbs`<Greeting @greeting={{this.greeting}}/>`);
-
-    await click('button');
-    assert.equal(this.greeting.hi, 'Hola!');
+    assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
   });
 });

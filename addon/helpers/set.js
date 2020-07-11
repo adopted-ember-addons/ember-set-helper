@@ -1,34 +1,28 @@
 import { helper } from '@ember/component/helper';
 import { assert } from '@ember/debug';
-import { get, set as emberSet } from '@ember/object';
-import { Placeholder } from './-set-placeholder';
+import { set as emberSet } from '@ember/object';
 
-function set(positional) {
-  let [target, key, valueOrPlaceholder] = positional;
-  assert(
-    'you must pass a path and a value to the `(set)` helper. The value can be a defered value, using placeholder syntax, e.g. `(set this.value _)`',
-    positional.length > 2
-  );
-  assert(
-    'you cannot pass more than a path and a value to set',
-    positional.length === 3
-  );
-  assert(
-    'you must pass a path to {{set}}',
-    (Boolean(target) && typeof key === 'string') || typeof key === 'symbol'
-  );
+function set(positional, named) {
+  let [target, maybePath, maybeValue] = positional;
 
-  if (valueOrPlaceholder instanceof Placeholder) {
-    return _value => {
-      let path = valueOrPlaceholder.path;
+  let namedPath = named.path;
 
-      let value = path === null ? _value : get(_value, path);
+  let path;
 
-      return emberSet(target, key, value);
-    };
+  if (namedPath !== undefined) {
+    path = maybePath !== undefined ? `${maybePath}.${namedPath}` : namedPath;
   } else {
-    return () => emberSet(target, key, valueOrPlaceholder);
+    path = maybePath;
   }
+
+  assert(
+    'you must pass a path to {{set}}. You can pass a path statically, as in `{{set this.foo}}`, or with the path argument dynamically, as in `{{set this path="foo"}}`',
+    Boolean(target) && (typeof path === 'string' && path.length > 0 || typeof path === 'symbol' || typeof path === 'number')
+  );
+
+  return positional.length === 3
+    ? () => emberSet(target, path, maybeValue)
+    : value => emberSet(target, path, value);
 }
 
 export default helper(set);

@@ -4,12 +4,26 @@ module.exports = {
   name: require('./package').name,
 
   setupPreprocessorRegistry(type, registry) {
-    registry.add('htmlbars-ast-plugin', {
-      name: 'set-placeholder',
-      plugin: require('./lib/set-placeholder-transform'),
+    const plugin = this._buildPlugin();
+
+    plugin.parallelBabel = {
+      requireFile: __filename,
+      buildUsing: '_buildPlugin',
+      params: {}
+    };
+
+    registry.add('htmlbars-ast-plugin', plugin);
+  },
+
+  _buildPlugin() {
+    const SetTransform = require('./lib/set-transform');
+
+    return {
+      name: 'set-transform',
+      plugin: SetTransform,
       baseDir() {
         return __dirname;
-      },
-    });
-  },
+      }
+    };
+  }
 };
