@@ -10,7 +10,7 @@ function set(positional, named) {
   let path;
 
   if (namedPath !== undefined) {
-    path = maybePath !== undefined ? `${maybePath}.${namedPath}` : namedPath;
+    path = maybePath !== undefined && maybePath !== '' ? `${maybePath}.${namedPath}` : namedPath;
   } else {
     path = maybePath;
   }
