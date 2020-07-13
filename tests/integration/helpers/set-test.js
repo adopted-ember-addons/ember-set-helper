@@ -93,6 +93,24 @@ module('Integration | Helper | set', function(hooks) {
     assert.equal(find('[data-test-greeting2]').textContent.trim(), 'Hello!');
   });
 
+  test('it works with a dynamic path on a component argument', async function(assert) {
+    this.set('path', 'greeting1');
+    this.set('obj', {});
+
+    await render(hbs`
+      <UpdateParameter @parameter={{this.obj}} @path={{this.path}} />
+    `);
+
+    await click('button');
+
+    assert.equal(this.obj.greeting1, 42);
+
+    this.set('path', 'greeting2');
+    await click('button');
+
+    assert.equal(this.obj.greeting2, 42);
+  });
+
   test('it works without a value', async function(assert) {
     await render(hbs`
       <span data-test-count>{{this.count}}</span>
