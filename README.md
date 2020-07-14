@@ -114,7 +114,7 @@ to first pick the value off of the event, and then pass it to `{{set}}`:
 ## Installation
 
 ```
-ember install ember-simple-set-helper
+ember install ember-set-helper
 ```
 
 ## Contributing
