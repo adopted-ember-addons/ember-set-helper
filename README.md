@@ -101,10 +101,6 @@ to first pick the value off of the event, and then pass it to `{{set}}`:
 - Optional last parameter if setting a static value (e.g. `(set this.foo "bar")` === `(fn (mut this.foo) "bar")`)
 - Cannot be used as both a getter and setter for the value, only provides a setter
 
-### Differences from `ember-set-helper`
-
-- No ability to use placeholder syntax
-
 ## Compatibility
 
 - Ember.js v3.4 or above
@@ -114,7 +110,7 @@ to first pick the value off of the event, and then pass it to `{{set}}`:
 ## Installation
 
 ```
-ember install ember-simple-set-helper
+ember install ember-set-helper
 ```
 
 ## Contributing
