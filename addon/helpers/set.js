@@ -17,7 +17,7 @@ function set(positional, named) {
 
   assert(
     'you must pass a path to {{set}}. You can pass a path statically, as in `{{set this.foo}}`, or with the path argument dynamically, as in `{{set this path="foo"}}`',
-    typeof path === 'string' && path.length > 0 || typeof path === 'symbol' || typeof path === 'number')
+    (typeof path === 'string' && path.length > 0 || typeof path === 'symbol' || typeof path === 'number')
   );
 
   return positional.length === 3
