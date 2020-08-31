@@ -1,3 +1,12 @@
+## v1.1.0 (2020-08-31)
+
+#### :rocket: Enhancement
+* [#26](https://github.com/pzuraq/ember-set-helper/pull/26) Remove target from assertion to better align with `mut` ([@rwwagner90](https://github.com/rwwagner90))
+
+#### Committers: 1
+- Robert Wagner ([@rwwagner90](https://github.com/rwwagner90))
+
+
 ## v1.0.1 (2020-07-17)
 
 #### :bug: Bug Fix
