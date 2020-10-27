@@ -5,11 +5,11 @@ A better `mut` helper!
 ```hbs
 {{this.greeting}}
 
-<button {{on "click" (set this.greeting "Hello!")}}>
+<button {{on "click" (set this "greeting" "Hello!")}}>
   English
 </button>
 
-<button {{on "click" (fn (set this.greeting) "Hola!")}}>
+<button {{on "click" (fn (set this "greeting") "Hola!")}}>
   Español
 </button>
 ```
@@ -22,7 +22,7 @@ without having to write your own custom action. For simple cases, this is pretty
 handy:
 
 ```hbs
-<button {{on "click" (set this.greeting "Hello!")}}>
+<button {{on "click" (set this "greeting" "Hello!")}}>
   English
 </button>
 ```
@@ -61,7 +61,7 @@ export default class Counter extends Component {
 
 ```hbs
 <!-- usage -->
-<Counter @onClick={{set this.currentCount}} />
+<Counter @onClick={{set this "currentCount"}} />
 ```
 
 This will set the value of `this.currentCount` to whatever value is passed to it
@@ -70,10 +70,10 @@ user clicks the button).
 
 ### Passing a dynamic path
 
-You can pass a path dynamically using the `path` named argument to the helper:
+You can pass a path dynamically using to the helper as well:
 
 ```hbs
-<button {{on "click" (set this "Hello!" path=this.greetingPath)}}>
+<button {{on "click" (set this this.greetingPath "Hello!")}}>
   English
 </button>
 ```
@@ -92,13 +92,13 @@ from [ember-composable-helpers](https://github.com/DockYard/ember-composable-hel
 to first pick the value off of the event, and then pass it to `{{set}}`:
 
 ```hbs
-<input {{on "input" (pick "target.value" (set this.value))}}>
+<input {{on "input" (pick "target.value" (set this "value"))}}>
 ```
 
 ### Differences from `mut`
 
-- No need to call wrap the helper (e.g. `(set this.foo)` === `(fn (mut this.foo))`)
-- Optional last parameter if setting a static value (e.g. `(set this.foo "bar")` === `(fn (mut this.foo) "bar")`)
+- No need to call wrap the helper (e.g. `(set this "foo")` === `(fn (mut this.foo))`)
+- Optional last parameter if setting a static value (e.g. `(set this "foo" "bar")` === `(fn (mut this.foo) "bar")`)
 - Cannot be used as both a getter and setter for the value, only provides a setter
 
 ## Compatibility
