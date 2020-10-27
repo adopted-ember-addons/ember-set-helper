@@ -3,7 +3,7 @@
 </div>
 
 <div>
-  <button type="button" {{on "click" (set this.greeting "Hello!")}}>
+  <button type="button" {{on "click" (set this "greeting" "Hello!")}}>
     English
   </button>
 </div>
@@ -14,7 +14,7 @@
   count: {{this.count}}
 </div>
 <div>
-  <Counter @onUpdate={{set this.count}} />
+  <Counter @onUpdate={{set this "count"}} />
 </div>
 
 <hr>

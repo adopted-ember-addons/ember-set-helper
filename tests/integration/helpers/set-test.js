@@ -11,7 +11,7 @@ module('Integration | Helper | set', function(hooks) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
-      <button type="button" {{on "click" (set this.greeting "Hello!")}}>
+      <button type="button" {{on "click" (set this "greeting" "Hello!")}}>
         English
       </button>
     `);
@@ -30,7 +30,7 @@ module('Integration | Helper | set', function(hooks) {
       <span data-test-greeting>{{this.person.name}}</span>
 
       {{#let this.person as |person|}}
-        <button type="button" {{on "click" (set person.name "Liz")}}>
+        <button type="button" {{on "click" (set person "name" "Liz")}}>
           Set Name
         </button>
       {{/let}}
@@ -50,7 +50,7 @@ module('Integration | Helper | set', function(hooks) {
       <span data-test-greeting1>{{this.greeting1}}</span>
       <span data-test-greeting2>{{this.greeting2}}</span>
 
-      <button type="button" {{on "click" (set this "Hello!" path=this.path)}}>
+      <button type="button" {{on "click" (set this this.path "Hello!")}}>
         Set Greeting
       </button>
     `);
@@ -75,7 +75,7 @@ module('Integration | Helper | set', function(hooks) {
       <span data-test-greeting1>{{this.obj.greeting1}}</span>
       <span data-test-greeting2>{{this.obj.greeting2}}</span>
 
-      <button type="button" {{on "click" (set this.obj "Hello!" path=this.path)}}>
+      <button type="button" {{on "click" (set this (concat "obj." this.path) "Hello!")}}>
         Set Greeting
       </button>
     `);
@@ -114,7 +114,7 @@ module('Integration | Helper | set', function(hooks) {
   test('it works without a value', async function(assert) {
     await render(hbs`
       <span data-test-count>{{this.count}}</span>
-      <Counter @onUpdate={{set this.count}} />
+      <Counter @onUpdate={{set this "count"}} />
     `);
 
     assert.equal(find('[data-test-count]').textContent.trim(), '');
@@ -143,7 +143,7 @@ module('Integration | Helper | set', function(hooks) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
-      <input {{on "input" (pick "target.value" (set this.greeting))}}>
+      <input {{on "input" (pick "target.value" (set this "greeting"))}}>
     `);
 
     assert.equal(find('[data-test-greeting]').textContent.trim(), '');
