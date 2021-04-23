@@ -6,7 +6,7 @@ function set(positional) {
   let [target, path, maybeValue] = positional;
 
   assert(
-    'you must pass a path to {{set}}. You can pass a path statically, as in `{{set this.foo}}`, or with the path argument dynamically, as in `{{set this path="foo"}}`',
+    'you must pass a path to {{set}}. You can pass a path statically, as in `{{set this "foo"}}`, or with the path dynamically, as in `{{set this this.greetingPath "Hello"}}`',
     (typeof path === 'string' && path.length > 0 || typeof path === 'symbol' || typeof path === 'number')
   );
 
