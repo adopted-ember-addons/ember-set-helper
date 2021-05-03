@@ -1,3 +1,13 @@
+## v2.0.1 (2021-05-03)
+
+#### :bug: Bug Fix
+* [#33](https://github.com/pzuraq/ember-set-helper/pull/33) Update assertion to match README ([@betocantu93](https://github.com/betocantu93))
+* [#32](https://github.com/pzuraq/ember-set-helper/pull/32) Move htmlbars to dev dep ([@nlfurniss](https://github.com/nlfurniss))
+
+#### Committers: 2
+- Alberto Cantú Gómez ([@betocantu93](https://github.com/betocantu93))
+- Nathaniel Furniss ([@nlfurniss](https://github.com/nlfurniss))
+
 ## v2.0.0 (2020-10-27)
 
 #### :boom: Breaking Change
