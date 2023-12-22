@@ -1,0 +1,3 @@
+packages:
+  - 'ember-set-helper'
+  - 'test-app'

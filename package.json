@@ -8,81 +8,25 @@
   "repository": "https://github.com/pzuraq/ember-set-helper",
   "license": "MIT",
   "author": "Chris Garrett",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
   "scripts": {
-    "build": "ember build --environment=production",
-    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
-    "lint:hbs": "ember-template-lint .",
-    "lint:js": "eslint .",
-    "start": "ember serve",
-    "test": "npm-run-all lint:* test:*",
-    "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
-  },
-  "dependencies": {
-    "ember-cli-babel": "^7.18.0"
+    "build": "pnpm --filter ember-set-helper build",
+    "lint": "pnpm --filter '*' lint",
+    "lint:fix": "pnpm --filter '*' lint:fix",
+    "prepare": "pnpm build",
+    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start:addon": "pnpm --filter ember-set-helper start --no-watch.clearScreen",
+    "start:test-app": "pnpm --filter test-app start",
+    "test": "pnpm --filter '*' test",
+    "test:ember": "pnpm --filter '*' test:ember"
   },
   "devDependencies": {
-    "@ember/optional-features": "^1.3.0",
-    "@glimmer/component": "^1.0.0",
-    "@glimmer/tracking": "^1.0.0",
-    "babel-eslint": "^10.1.0",
-    "broccoli-asset-rev": "^3.0.0",
-    "ember-auto-import": "^1.5.3",
-    "ember-cli": "~3.17.0",
-    "ember-cli-dependency-checker": "^3.2.0",
-    "ember-cli-htmlbars": "^5.7.1",
-    "ember-cli-inject-live-reload": "^2.0.2",
-    "ember-cli-sri": "^2.1.1",
-    "ember-cli-uglify": "^3.0.0",
-    "ember-composable-helpers": "^4.2.2",
-    "ember-disable-prototype-extensions": "^1.1.3",
-    "ember-export-application-global": "^2.0.1",
-    "ember-load-initializers": "^2.1.1",
-    "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-qunit": "^4.6.0",
-    "ember-resolver": "^7.0.0",
-    "ember-source": "~3.17.0",
-    "ember-source-channel-url": "^2.0.1",
-    "ember-template-lint": "^2.4.0",
-    "ember-try": "^1.4.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-ember": "^7.10.1",
-    "eslint-plugin-node": "^11.0.0",
-    "loader.js": "^4.7.0",
-    "npm-run-all": "^4.1.5",
-    "qunit-dom": "^1.1.0",
-    "release-it": "^13.5.7",
-    "release-it-lerna-changelog": "^2.3.0"
+    "concurrently": "^8.2.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ember-template-tag": "^1.1.0"
   },
-  "engines": {
-    "node": "10.* || >= 12"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
-  "ember": {
-    "edition": "octane"
-  },
-  "ember-addon": {
-    "configPath": "tests/dummy/config"
-  },
-  "release-it": {
-    "plugins": {
-      "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
+  "pnpm": {
+    "overrides": {
+      "@types/eslint": "^7.0.0"
     }
   }
 }
