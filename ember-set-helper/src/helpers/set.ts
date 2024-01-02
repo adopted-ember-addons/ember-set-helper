@@ -12,7 +12,7 @@ export default function set<T extends object, K extends keyof T & string>(
       typeof path === 'symbol' ||
       typeof path === 'number',
   );
-  return arguments.length === 3 && maybeValue !== undefined
+  return arguments.length === 3
     ? () => emberSet(target, path, maybeValue)
     : (value: unknown) => emberSet(target, path, value);
 }
