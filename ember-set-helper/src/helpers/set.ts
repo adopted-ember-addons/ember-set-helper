@@ -14,7 +14,7 @@ function set<T extends object, K extends keyof T>(
   );
   return positional.length === 3
     ? () => emberSet(target, path, maybeValue)
-    : (value: T[K]) => emberSet(target, path, value);
+    : (value: unknown) => emberSet(target, path, value);
 }
 
 export default helper(set);
