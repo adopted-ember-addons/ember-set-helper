@@ -40,11 +40,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Install Dependencies
-        run: pnpm i --frozen-lockfile
+      - uses: wyvox/action-setup-pnpm@v3
       - name: Run Tests
         working-directory: test-app
         run: pnpm ember try:one ${{ matrix.try-scenario }}
