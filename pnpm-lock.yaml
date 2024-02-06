@@ -328,8 +328,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-composable-helpers:
-        specifier: ^4.4.1
-        version: 4.5.0
+        specifier: ^5.0.0
+        version: 5.0.0
       ember-data:
         specifier: ~5.3.0
         version: 5.3.0(@babel/core@7.23.6)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(@glint/template@1.2.1)(ember-source@5.4.0)
@@ -6507,9 +6507,9 @@ packages:
       - supports-color
     dev: true
 
-  /ember-composable-helpers@4.5.0:
-    resolution: {integrity: sha512-XjpDLyVPsLCy6kd5dIxZonOECCO6AA5sY5Hr6tYUbJg3s5ghFAiFWaNcYraYC+fL2yPJQAswwpfwGlQORUJZkw==}
-    engines: {node: 10.* || >= 12.*}
+  /ember-composable-helpers@5.0.0:
+    resolution: {integrity: sha512-gyUrjiSju4QwNrsCLbBpP0FL6VDFZaELNW7Kbcp60xXhjvNjncYgzm4zzYXhT+i1lLA6WEgRZ3lOGgyBORYD0w==}
+    engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@babel/core': 7.23.6
       broccoli-funnel: 2.0.1
