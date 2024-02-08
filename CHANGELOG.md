@@ -1,5 +1,28 @@
 # Changelog
 
+## Release (2024-02-08)
+
+ember-set-helper 3.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-set-helper`, `test-app`
+  * [#51](https://github.com/adopted-ember-addons/ember-set-helper/pull/51) Convert to v2 addon, plain function with types ([@johanrd](https://github.com/johanrd))
+
+#### :bug: Bug Fix
+* `ember-set-helper`
+  * [#55](https://github.com/adopted-ember-addons/ember-set-helper/pull/55) Add template-registry.ts ([@johanrd](https://github.com/johanrd))
+
+#### :house: Internal
+* Other
+  * [#61](https://github.com/adopted-ember-addons/ember-set-helper/pull/61) moving to release-plan ([@MelSumner](https://github.com/MelSumner))
+  * [#54](https://github.com/adopted-ember-addons/ember-set-helper/pull/54) Create dependabot.yml ([@MelSumner](https://github.com/MelSumner))
+* `test-app`
+  * [#53](https://github.com/adopted-ember-addons/ember-set-helper/pull/53) Add a little CI ([@MelSumner](https://github.com/MelSumner))
+
+#### Committers: 2
+- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))
+- [@johanrd](https://github.com/johanrd)
+
 ## v2.0.1 (2021-05-03)
 
 #### :bug: Bug Fix
