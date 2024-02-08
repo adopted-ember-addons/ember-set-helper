@@ -1,3 +1,5 @@
+# Changelog
+
 ## v2.0.1 (2021-05-03)
 
 #### :bug: Bug Fix
