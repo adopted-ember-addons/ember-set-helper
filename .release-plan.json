@@ -1,0 +1,21 @@
+{
+  "solution": {
+    "ember-set-helper": {
+      "impact": "major",
+      "oldVersion": "2.0.1",
+      "newVersion": "3.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
+        }
+      ],
+      "pkgJSONPath": "./package.json"
+    }
+  },
+  "description": "## Release (2024-02-08)\n\nember-set-helper 3.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-set-helper`, `test-app`\n  * [#51](https://github.com/adopted-ember-addons/ember-set-helper/pull/51) Convert to v2 addon, plain function with types ([@johanrd](https://github.com/johanrd))\n\n#### :bug: Bug Fix\n* `ember-set-helper`\n  * [#55](https://github.com/adopted-ember-addons/ember-set-helper/pull/55) Add template-registry.ts ([@johanrd](https://github.com/johanrd))\n\n#### :house: Internal\n* Other\n  * [#61](https://github.com/adopted-ember-addons/ember-set-helper/pull/61) moving to release-plan ([@MelSumner](https://github.com/MelSumner))\n  * [#54](https://github.com/adopted-ember-addons/ember-set-helper/pull/54) Create dependabot.yml ([@MelSumner](https://github.com/MelSumner))\n* `test-app`\n  * [#53](https://github.com/adopted-ember-addons/ember-set-helper/pull/53) Add a little CI ([@MelSumner](https://github.com/MelSumner))\n\n#### Committers: 2\n- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))\n- [@johanrd](https://github.com/johanrd)\n"
+}
