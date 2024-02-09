@@ -24,7 +24,8 @@
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
-    "test:ember-compat": "ember try:each"
+    "test:ember-compat": "ember try:each",
+    "test:ember-compat:one": "ember try:one"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
