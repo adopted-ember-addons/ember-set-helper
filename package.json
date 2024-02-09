@@ -1,5 +1,5 @@
 {
-  "name": "ember-set-helper",
+  "private": true,
   "version": "3.0.0",
   "description": "A better `mut` helper!",
   "keywords": [
