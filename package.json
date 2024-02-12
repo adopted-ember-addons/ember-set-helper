@@ -1,13 +1,6 @@
 {
-  "name": "ember-set-helper",
-  "version": "3.0.0",
-  "description": "A better `mut` helper!",
-  "keywords": [
-    "ember-addon"
-  ],
+  "private": true,
   "repository": "https://github.com/adopted-ember-addons/ember-set-helper",
-  "license": "MIT",
-  "author": "Chris Garrett",
   "scripts": {
     "build": "pnpm --filter ember-set-helper build",
     "lint": "pnpm --filter '*' lint",
