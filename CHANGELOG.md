@@ -1,5 +1,23 @@
 # Changelog
 
+## Release (2024-02-12)
+
+ember-set-helper 3.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-set-helper`, `test-app`
+  * [#67](https://github.com/adopted-ember-addons/ember-set-helper/pull/67) Ensure workspace root is a private unnamed package ([@gilest](https://github.com/gilest))
+
+#### :house: Internal
+* `ember-set-helper`, `test-app`
+  * [#64](https://github.com/adopted-ember-addons/ember-set-helper/pull/64) Move ci.yml to correct folder ([@MelSumner](https://github.com/MelSumner))
+* Other
+  * [#65](https://github.com/adopted-ember-addons/ember-set-helper/pull/65) putting it back where it was first ([@MelSumner](https://github.com/MelSumner))
+
+#### Committers: 2
+- Giles Thompson ([@gilest](https://github.com/gilest))
+- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))
+
 ## Release (2024-02-08)
 
 ember-set-helper 3.0.0 (major)
