@@ -27,6 +27,13 @@ handy:
 </button>
 ```
 
+### Import to strict mode templates
+For usage in `gjs` or `gts` templates:
+
+```js
+import set from 'ember-set-helper/helpers/set'
+```
+
 ### Setting Passed Values
 
 If you do not provide a value to the `set` helper, it will set the value that is
