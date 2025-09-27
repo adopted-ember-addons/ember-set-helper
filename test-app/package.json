@@ -91,8 +91,8 @@
     "ember-set-helper": "workspace:*",
     "ember-source": "~5.4.0",
     "ember-source-channel-url": "^3.0.0",
-    "ember-template-lint": "^5.11.2",
     "ember-template-imports": "^3.0.0",
+    "ember-template-lint": "^5.11.2",
     "ember-try": "^3.0.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
@@ -107,7 +107,7 @@
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2",
-    "tracked-built-ins": "^3.3.0",
+    "tracked-built-ins": "^3.4.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0"
   },

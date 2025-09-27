@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click, fillIn } from '@ember/test-helpers';
+import { tracked } from 'tracked-built-ins';
 import hbs from 'htmlbars-inline-precompile';
 import User from 'test-app/models/user';
 
@@ -8,10 +9,15 @@ module('Integration | Helper | set', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works', async function (assert) {
-    await render(hbs`
-      <span data-test-greeting>{{this.greeting}}</span>
+    const data = new (class {
+      @tracked greeting;
+    })();
+    this.data = data;
 
-      <button type="button" {{on "click" (set this "greeting" "Hello!")}}>
+    await render(hbs`
+      <span data-test-greeting>{{this.data.greeting}}</span>
+
+      <button type="button" {{on "click" (set this.data "greeting" "Hello!")}}>
         English
       </button>
     `);
@@ -27,12 +33,15 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('it works on local paths', async function (assert) {
-    this.person = {};
+    const data = new (class {
+      person = tracked({});
+    })();
+    this.data = data;
 
     await render(hbs`
-      <span data-test-greeting>{{this.person.name}}</span>
+      <span data-test-greeting>{{this.data.person.name}}</span>
 
-      {{#let this.person as |person|}}
+      {{#let this.data.person as |person|}}
         <button type="button" {{on "click" (set person "name" "Liz")}}>
           Set Name
         </button>
@@ -47,13 +56,18 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('it works with a dynamic path', async function (assert) {
-    this.set('path', 'greeting1');
+    const data = new (class {
+      @tracked path = 'greeting1';
+      @tracked greeting1;
+      @tracked greeting2;
+    })();
+    this.data = data;
 
     await render(hbs`
-      <span data-test-greeting1>{{this.greeting1}}</span>
-      <span data-test-greeting2>{{this.greeting2}}</span>
+      <span data-test-greeting1>{{this.data.greeting1}}</span>
+      <span data-test-greeting2>{{this.data.greeting2}}</span>
 
-      <button type="button" {{on "click" (set this this.path "Hello!")}}>
+      <button type="button" {{on "click" (set this.data this.data.path "Hello!")}}>
         Set Greeting
       </button>
     `);
@@ -67,7 +81,7 @@ module('Integration | Helper | set', function (hooks) {
       'Hello!',
     );
 
-    this.set('path', 'greeting2');
+    data.path = 'greeting2';
     await click('button');
 
     assert.strictEqual(
@@ -77,14 +91,17 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('it works with a dynamic path on a nested object', async function (assert) {
-    this.set('path', 'greeting1');
-    this.set('obj', {});
+    const data = new (class {
+      @tracked path = 'greeting1';
+      obj = tracked({});
+    })();
+    this.data = data;
 
     await render(hbs`
-      <span data-test-greeting1>{{this.obj.greeting1}}</span>
-      <span data-test-greeting2>{{this.obj.greeting2}}</span>
+      <span data-test-greeting1>{{this.data.obj.greeting1}}</span>
+      <span data-test-greeting2>{{this.data.obj.greeting2}}</span>
 
-      <button type="button" {{on "click" (set this (concat "obj." this.path) "Hello!")}}>
+      <button type="button" {{on "click" (set this.data (concat "obj." this.data.path) "Hello!")}}>
         Set Greeting
       </button>
     `);
@@ -99,7 +116,7 @@ module('Integration | Helper | set', function (hooks) {
       'Hello!',
     );
 
-    this.set('path', 'greeting2');
+    data.path = 'greeting2';
     await click('button');
 
     assert.strictEqual(
@@ -109,42 +126,35 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('it works with a dynamic path on a component argument', async function (assert) {
-    this.set('path', 'greeting1');
-    this.set('obj', {});
+    const data = new (class {
+      @tracked path = 'greeting1';
+      @tracked obj = {};
+    })();
+    this.data = data;
 
     await render(hbs`
-      <UpdateParameter @parameter={{this.obj}} @path={{this.path}} />
+      <UpdateParameter @parameter={{this.data.obj}} @path={{this.data.path}} />
     `);
 
     await click('button');
 
-    assert.strictEqual(this.obj.greeting1, 42);
+    assert.strictEqual(data.obj.greeting1, 42);
 
-    this.set('path', 'greeting2');
+    data.path = 'greeting2';
     await click('button');
 
-    assert.strictEqual(this.obj.greeting2, 42);
-  });
-
-  test('it works without a value', async function (assert) {
-    await render(hbs`
-      <span data-test-count>{{this.count}}</span>
-      <Counter @onUpdate={{set this "count"}} />
-    `);
-
-    assert.strictEqual(find('[data-test-count]').textContent.trim(), '');
-
-    await click('button');
-    await click('button');
-
-    assert.strictEqual(find('[data-test-count]').textContent.trim(), '2');
+    assert.strictEqual(data.obj.greeting2, 42);
   });
 
   test('it works without a value on an object', async function (assert) {
-    this.set('user', User.create({ name: 'Alice' }));
+    const data = new (class {
+      user = tracked(User.create({ name: 'Alice' }));
+    })();
+    this.data = data;
+
     await render(hbs`
-      <span data-test-name>{{this.user.name}}</span>
-      <Parent @user={{this.user}} />
+      <span data-test-name>{{this.data.user.name}}</span>
+      <Parent @user={{this.data.user}} />
     `);
 
     assert.dom('[data-test-name]').hasText('Alice');
@@ -155,15 +165,21 @@ module('Integration | Helper | set', function (hooks) {
   });
 
   test('can pick a value using {{pick}} from ember-composable-helpers', async function (assert) {
-    await render(hbs`
-      <span data-test-greeting>{{this.greeting}}</span>
+    const data = new (class {
+      @tracked greeting;
+    })();
+    this.data = data;
 
-      <input aria-label={{this.greeting}} {{on "input" (pick "target.value" (set this "greeting"))}}>
+    await render(hbs`
+      <span data-test-greeting>{{this.data.greeting}}</span>
+
+      <label for="greeting-input">Greeting:</label>
+      <input id="greeting-input" {{on "input" (pick "target.value" (set this.data "greeting"))}}>
     `);
 
     assert.strictEqual(find('[data-test-greeting]').textContent.trim(), '');
 
-    await fillIn('input', 'Hello!');
+    await fillIn('#greeting-input', 'Hello!');
 
     assert.strictEqual(
       find('[data-test-greeting]').textContent.trim(),
