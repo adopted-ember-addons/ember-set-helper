@@ -1,5 +1,22 @@
 # Changelog
 
+## Release (2025-10-04)
+
+ember-set-helper 3.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-set-helper`
+  * [#80](https://github.com/adopted-ember-addons/ember-set-helper/pull/80) feat: add index re-export ([@aklkv](https://github.com/aklkv))
+
+#### :memo: Documentation
+* [#82](https://github.com/adopted-ember-addons/ember-set-helper/pull/82) Update README.md with index re-export example for strict mode ([@SergeAstapov](https://github.com/SergeAstapov))
+* [#74](https://github.com/adopted-ember-addons/ember-set-helper/pull/74) Update README.md with strict mode import example ([@johanrd](https://github.com/johanrd))
+
+#### Committers: 3
+- Alexey Kulakov ([@aklkv](https://github.com/aklkv))
+- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))
+- [@johanrd](https://github.com/johanrd)
+
 ## Release (2024-02-12)
 
 ember-set-helper 3.0.1 (patch)
