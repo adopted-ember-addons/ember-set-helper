@@ -1,21 +1,17 @@
 {
   "solution": {
     "ember-set-helper": {
-      "impact": "patch",
-      "oldVersion": "3.0.0",
-      "newVersion": "3.0.1",
+      "impact": "minor",
+      "oldVersion": "3.0.1",
+      "newVersion": "3.1.0",
       "constraints": [
         {
-          "impact": "patch",
-          "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
       "pkgJSONPath": "./ember-set-helper/package.json"
     }
   },
-  "description": "## Release (2024-02-12)\n\nember-set-helper 3.0.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-set-helper`, `test-app`\n  * [#67](https://github.com/adopted-ember-addons/ember-set-helper/pull/67) Ensure workspace root is a private unnamed package ([@gilest](https://github.com/gilest))\n\n#### :house: Internal\n* `ember-set-helper`, `test-app`\n  * [#64](https://github.com/adopted-ember-addons/ember-set-helper/pull/64) Move ci.yml to correct folder ([@MelSumner](https://github.com/MelSumner))\n* Other\n  * [#65](https://github.com/adopted-ember-addons/ember-set-helper/pull/65) putting it back where it was first ([@MelSumner](https://github.com/MelSumner))\n\n#### Committers: 2\n- Giles Thompson ([@gilest](https://github.com/gilest))\n- Melanie Sumner ([@MelSumner](https://github.com/MelSumner))\n"
+  "description": "## Release (2025-10-04)\n\nember-set-helper 3.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-set-helper`\n  * [#80](https://github.com/adopted-ember-addons/ember-set-helper/pull/80) feat: add index re-export ([@aklkv](https://github.com/aklkv))\n\n#### :memo: Documentation\n* [#82](https://github.com/adopted-ember-addons/ember-set-helper/pull/82) Update README.md with index re-export example for strict mode ([@SergeAstapov](https://github.com/SergeAstapov))\n* [#74](https://github.com/adopted-ember-addons/ember-set-helper/pull/74) Update README.md with strict mode import example ([@johanrd](https://github.com/johanrd))\n\n#### Committers: 3\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n- [@johanrd](https://github.com/johanrd)\n"
 }
