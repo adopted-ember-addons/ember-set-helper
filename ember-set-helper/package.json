@@ -51,9 +51,7 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.7",
-    "@types/lodash-es": "^4.17.12",
-    "decorator-transforms": "^1.0.1",
-    "lodash-es": "^4.17.21"
+    "decorator-transforms": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
