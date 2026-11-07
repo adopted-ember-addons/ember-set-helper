@@ -117,9 +117,9 @@ to first pick the value off of the event, and then pass it to `{{set}}`:
 
 ## Compatibility
 
-- Ember.js v3.4 or above
-- Ember CLI v2.13 or above
-- Node.js v8 or above
+- Ember.js v4.5 or above. CI tests v4.8 and above.
+- Ember.js v3.25 to v4.4 with [ember-functions-as-helper-polyfill](https://github.com/NullVoxPopuli/ember-functions-as-helper-polyfill), because `{{set}}` is a plain function helper.
+- Embroider or ember-auto-import v2
 
 ## Installation
 

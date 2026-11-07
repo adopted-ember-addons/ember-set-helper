@@ -1,26 +1,113 @@
 {
-  "private": true,
+  "name": "ember-set-helper",
+  "version": "3.1.0",
+  "description": "A better `mut` helper!",
+  "keywords": [
+    "ember-addon"
+  ],
   "repository": "https://github.com/adopted-ember-addons/ember-set-helper",
+  "license": "MIT",
+  "author": "Chris Garrett",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./addon-main.js": "./addon-main.cjs",
+    "./*.css": "./dist/*.css",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "src"
+  ],
   "scripts": {
-    "build": "pnpm --filter ember-set-helper build",
-    "lint": "pnpm --filter '*' lint",
-    "lint:fix": "pnpm --filter '*' lint:fix",
-    "prepare": "pnpm build",
-    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "pnpm --filter ember-set-helper start --no-watch.clearScreen",
-    "start:test-app": "pnpm --filter test-app start",
-    "test": "pnpm --filter '*' test",
-    "test:ember": "pnpm --filter '*' test:ember"
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:publish": "pnpm build && publint run --level error",
+    "lint:types": "ember-tsc --noEmit",
+    "prepack": "rollup --config",
+    "start": "vite dev",
+    "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.11.0",
+    "decorator-transforms": "^2.4.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0",
-    "prettier": "^3.0.3",
-    "prettier-plugin-ember-template-tag": "^1.1.0",
-    "release-plan": "^0.7.0"
+    "@babel/core": "^8.1.0",
+    "@babel/eslint-parser": "^8.0.7",
+    "@babel/plugin-transform-typescript": "^8.0.6",
+    "@babel/runtime": "^8.1.0",
+    "@ember/app-tsconfig": "^2.1.0",
+    "@ember/library-tsconfig": "^3.0.0",
+    "@ember/test-helpers": "^5.8.0",
+    "@ember/test-waiters": "^4.1.2",
+    "@embroider/addon-dev": "^8.5.0",
+    "@embroider/compat": "^4.1.28",
+    "@embroider/core": "^4.6.10",
+    "@embroider/macros": "^1.21.4",
+    "@embroider/vite": "^1.8.0",
+    "@eslint/js": "^10.0.1",
+    "@glimmer/component": "^2.2.1",
+    "@glint/ember-tsc": "^1.14.3",
+    "@glint/template": "^1.11.1",
+    "@glint/tsserver-plugin": "^2.7.16",
+    "@rollup/plugin-babel": "^7.1.0",
+    "@types/qunit": "^2.19.14",
+    "babel-plugin-ember-template-compilation": "^4.0.1",
+    "concurrently": "^10.0.6",
+    "ember-page-title": "^9.0.3",
+    "ember-qunit": "^9.2.0",
+    "ember-source": "^7.4.0",
+    "ember-strict-application-resolver": "^0.1.1",
+    "ember-template-lint": "^7.9.4",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ember": "^13.9.1",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^18.5.0",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-ember-template-tag": "^2.1.8",
+    "publint": "^0.3.25",
+    "qunit": "^3.0.0",
+    "qunit-dom": "^3.6.0",
+    "release-plan": "^0.20.1",
+    "rollup": "^4.67.5",
+    "testem": "^3.21.5",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.6"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "^7.0.0"
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./helpers/set.js": "./dist/_app_/helpers/set.js"
     }
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "packageManager": "pnpm@12.18.0"
 }
