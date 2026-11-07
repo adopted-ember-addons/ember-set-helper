@@ -92,6 +92,18 @@ module('Integration | Helper | setPath', function (hooks) {
     );
   });
 
+  test('it throws on a key that can change a prototype', function (assert) {
+    assert.throws(
+      () => setPath({}, '__proto__.polluted', true),
+      /does not set "__proto__.polluted"/,
+    );
+    assert.throws(
+      () => setPath({}, 'constructor.prototype.polluted', true),
+      /does not set "constructor.prototype.polluted"/,
+    );
+    assert.notOk('polluted' in {});
+  });
+
   test('it asserts on an empty key', function (assert) {
     assert.throws(() => setPath({}, 'user..name'), /you must pass a path/);
   });

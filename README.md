@@ -103,7 +103,8 @@ tracked state, or belongs to a tracked object such as `TrackedObject`.
 
 If the path is dynamic, use `setPath` (`{{set-path}}` in a loose-mode
 template). It reads each object on the path and assigns the last key. It throws
-if an object on the path is `null` or `undefined`:
+if an object on the path is `null` or `undefined`, or if the path contains
+`__proto__`, `constructor` or `prototype`:
 
 ```js
 import { setPath } from 'ember-set-helper';
@@ -121,10 +122,13 @@ v3 used `set` from `@ember/object`. v4 assigns with plain JavaScript:
 
 - A property that is not tracked no longer updates the template. Make it
   `@tracked`.
-- `{{set}}` takes one key. A nested path (`{{set this "user.name"}}`) asserts in
-  development. Pass the nested object (`{{set this.user "name"}}`), or use
-  `setPath`.
+- `{{set}}` takes one key. A nested path (`{{set this "user.name"}}`) throws.
+  Pass the nested object (`{{set this.user "name"}}`), or use `setPath`.
 - Classic `EmberObject` observers and computed properties do not run.
+- Proxies (`ObjectProxy`, `PromiseProxyMixin`, such as an async `belongsTo`) and
+  objects with `setUnknownProperty`, such as a classic changeset, do not forward
+  the value. It is set on the wrapper. Set the content directly, or write an
+  action that calls `set` from `@ember/object`.
 
 ### Picking values with `ember-composable-helpers`
 
@@ -145,8 +149,9 @@ to first pick the value off of the event, and then pass it to `{{set}}`:
 
 ### Differences from `mut`
 
-- No need to call wrap the helper (e.g. `(set this "foo")` === `(fn (mut this.foo))`)
-- Optional last parameter if setting a static value (e.g. `(set this "foo" "bar")` === `(fn (mut this.foo) "bar")`)
+- No need to wrap the helper (e.g. `(set this "foo")` instead of `(fn (mut this.foo))`)
+- Optional last parameter if setting a static value (e.g. `(set this "foo" "bar")` instead of `(fn (mut this.foo) "bar")`)
+- `mut` uses `set` from `@ember/object`, so it also updates a property that is not tracked. `set` does not.
 - Cannot be used as both a getter and setter for the value, only provides a setter
 
 ## Compatibility

@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, render, rerender } from '@ember/test-helpers';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import EmberObject from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type { TOC } from '@ember/component/template-only';
@@ -48,6 +49,18 @@ const Child: TOC<{ Args: { onChange: (name: string) => void } }> = <template>
 
 const Parent: TOC<{ Args: { person: Person } }> = <template>
   <Child @onChange={{set @person "name"}} />
+</template>;
+
+class User extends EmberObject {
+  @tracked name = '';
+}
+
+const UpdateArgument: TOC<{
+  Args: { greetings: Greetings; greetingKey: 'greeting1' | 'greeting2' };
+}> = <template>
+  <button type="button" {{on "click" (set @greetings @greetingKey "Hello!")}}>
+    Update
+  </button>
 </template>;
 
 const inputValue = (onValue: (value: string) => unknown) => (event: Event) =>
@@ -103,6 +116,27 @@ module('Integration | Helper | set', function (hooks) {
     assert.dom('[data-test-greeting2]').hasText('Hello!');
   });
 
+  test('it works with a dynamic key on a component argument', async function (assert) {
+    const keys = new Keys();
+    const greetings = new Greetings();
+
+    await render(
+      <template>
+        <UpdateArgument @greetings={{greetings}} @greetingKey={{keys.key}} />
+      </template>,
+    );
+
+    await click('button');
+
+    assert.strictEqual(greetings.greeting1, 'Hello!');
+
+    keys.key = 'greeting2';
+    await rerender();
+    await click('button');
+
+    assert.strictEqual(greetings.greeting2, 'Hello!');
+  });
+
   test('it works without a value', async function (assert) {
     const counter = new Count();
 
@@ -139,6 +173,26 @@ module('Integration | Helper | set', function (hooks) {
     assert.dom('[data-test-name]').hasText('Bob');
   });
 
+  test('it sets a tracked property on an EmberObject', async function (assert) {
+    const user = User.create({ name: 'Alice' });
+
+    await render(
+      <template>
+        <span data-test-name>{{user.name}}</span>
+
+        <button type="button" {{on "click" (set user "name" "Bob")}}>
+          Set name
+        </button>
+      </template>,
+    );
+
+    assert.dom('[data-test-name]').hasText('Alice');
+
+    await click('button');
+
+    assert.dom('[data-test-name]').hasText('Bob');
+  });
+
   test('it works with a value read from an event', async function (assert) {
     const person = new Person();
 
@@ -165,7 +219,7 @@ module('Integration | Helper | set', function (hooks) {
     assert.strictEqual(set(person, 'name')('Bob'), 'Bob');
   });
 
-  test('it asserts on a nested path', function (assert) {
+  test('it throws on a nested path', function (assert) {
     const person = new Person();
 
     assert.throws(
