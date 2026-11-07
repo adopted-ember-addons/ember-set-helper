@@ -57,19 +57,14 @@ provided to it when called. For example:
 // app/components/counter.js
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
 export default class Counter extends Component {
   @tracked count = 0;
 
-  @action
-  updateCount() {
+  updateCount = () => {
     this.count++;
-
-    if (this.args.onClick) {
-      this.args.onClick(this.count);
-    }
-  }
+    this.args.onClick?.(this.count);
+  };
 }
 ```
 
@@ -82,15 +77,54 @@ This will set the value of `this.currentCount` to whatever value is passed to it
 when it is called (in this case the `count` of the counter component whenever a
 user clicks the button).
 
-### Passing a dynamic path
+### Passing a dynamic key
 
-You can pass a path dynamically using to the helper as well:
+You can pass the key dynamically as well:
 
 ```hbs
-<button {{on "click" (set this this.greetingPath "Hello!")}}>
+<button {{on "click" (set this this.greetingKey "Hello!")}}>
   English
 </button>
 ```
+
+### Tracked properties
+
+`{{set}}` assigns the value with plain JavaScript (`target[key] = value`). The
+template updates only if the property is `@tracked`, is a setter that writes
+tracked state, or belongs to a tracked object such as `TrackedObject`.
+
+### Nested paths
+
+`{{set}}` sets one key. For a nested property, pass the nested object:
+
+```hbs
+<button {{on "click" (set this.user "name" "Liz")}}>Set name</button>
+```
+
+If the path is dynamic, use `setPath` (`{{set-path}}` in a loose-mode
+template). It reads each object on the path and assigns the last key. It throws
+if an object on the path is `null` or `undefined`:
+
+```js
+import { setPath } from 'ember-set-helper';
+```
+
+```hbs
+<button {{on "click" (setPath this (concat "user." this.field) "Liz")}}>
+  Set
+</button>
+```
+
+## Upgrading from v3
+
+v3 used `set` from `@ember/object`. v4 assigns with plain JavaScript:
+
+- A property that is not tracked no longer updates the template. Make it
+  `@tracked`.
+- `{{set}}` takes one key. A nested path (`{{set this "user.name"}}`) asserts in
+  development. Pass the nested object (`{{set this.user "name"}}`), or use
+  `setPath`.
+- Classic `EmberObject` observers and computed properties do not run.
 
 ### Picking values with `ember-composable-helpers`
 
