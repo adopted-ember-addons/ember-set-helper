@@ -88,20 +88,28 @@ module('Integration | Helper | setPath', function (hooks) {
 
     assert.throws(
       () => setPath(state, 'user.name', 'Liz')(),
-      /could not set "user.name": "user" is undefined/,
+      /could not set "user.name": "user" is not an object/,
     );
   });
 
   test('it throws on a key that can change a prototype', function (assert) {
     assert.throws(
-      () => setPath({}, '__proto__.polluted', true),
+      () => setPath({}, '__proto__.polluted', true)(),
       /does not set "__proto__.polluted"/,
     );
     assert.throws(
-      () => setPath({}, 'constructor.prototype.polluted', true),
-      /does not set "constructor.prototype.polluted"/,
+      () => setPath({}, 'constructor.prototype.polluted', true)(),
+      /could not set "constructor.prototype.polluted"/,
     );
     assert.notOk('polluted' in {});
+  });
+
+  test('it throws when a value on the path is a function', function (assert) {
+    assert.throws(
+      () => setPath({}, 'toString.call', () => 'replaced')(),
+      /"toString" is not an object/,
+    );
+    assert.strictEqual(Object.prototype.toString.call([]), '[object Array]');
   });
 
   test('it asserts on an empty key', function (assert) {

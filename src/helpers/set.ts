@@ -20,13 +20,15 @@ export default function set<T extends object, K extends keyof T>(
       typeof key === 'symbol' ||
       typeof key === 'number',
   );
-  if (typeof key === 'string' && key.includes('.')) {
-    throw new Error(
-      `{{set}} sets one key, but got the path "${key}". Use setPath ({{set-path}} in a loose-mode template) for a nested path, or pass the nested object: {{set this.parent "child"}}`,
-    );
-  }
+  const assign = (value: T[K]) => {
+    if (typeof key === 'string' && key.includes('.')) {
+      throw new Error(
+        `{{set}} sets one key, but got the path "${key}". Use setPath ({{set-path}} in a loose-mode template) for a nested path, or pass the nested object: {{set this.parent "child"}}`,
+      );
+    }
 
-  return rest.length === 1
-    ? () => (target[key] = rest[0])
-    : (value: T[K]) => (target[key] = value);
+    return (target[key] = value);
+  };
+
+  return rest.length === 1 ? () => assign(rest[0]) : assign;
 }

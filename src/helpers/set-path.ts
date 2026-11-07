@@ -1,18 +1,23 @@
 import { assert } from '@ember/debug';
 
-const unsafeKeys = new Set(['__proto__', 'constructor', 'prototype']);
-
 function assign(target: object, path: string, value: unknown) {
   const keys = path.split('.');
+
+  if (keys.includes('__proto__')) {
+    throw new Error(
+      `{{setPath}} does not set "${path}", because it has __proto__.`,
+    );
+  }
+
   const last = keys.pop()!;
   let object: unknown = target;
 
   for (const key of keys) {
     object = (object as Record<string, unknown>)[key];
 
-    if (object === null || object === undefined) {
+    if (typeof object !== 'object' || object === null) {
       throw new Error(
-        `{{setPath}} could not set "${path}": "${key}" is ${String(object)}.`,
+        `{{setPath}} could not set "${path}": "${key}" is not an object.`,
       );
     }
   }
@@ -38,18 +43,8 @@ export default function setPath(
 ) {
   assert(
     'you must pass a path to {{setPath}}, as in `{{setPath this "user.name"}}`',
-    typeof path === 'string' &&
-      path.length > 0 &&
-      path.split('.').every((key) => key.length > 0),
+    typeof path === 'string' && path.split('.').every((key) => key.length > 0),
   );
-
-  const unsafeKey = path.split('.').find((key) => unsafeKeys.has(key));
-
-  if (unsafeKey) {
-    throw new Error(
-      `{{setPath}} does not set "${path}", because "${unsafeKey}" can change the prototype of every object.`,
-    );
-  }
 
   return rest.length === 1
     ? () => assign(target, path, rest[0])

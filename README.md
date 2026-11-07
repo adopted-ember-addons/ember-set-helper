@@ -33,12 +33,13 @@ For usage in `gjs` or `gts` templates:
 
 ```js
 import set from 'ember-set-helper/helpers/set'
+import setPath from 'ember-set-helper/helpers/set-path'
 ```
 
 or
 
 ```js
-import { set } from 'ember-set-helper'
+import { set, setPath } from 'ember-set-helper'
 ```
 
 ### Setting Passed Values
@@ -95,7 +96,8 @@ tracked state, or belongs to a tracked object such as `TrackedObject`.
 
 ### Nested paths
 
-`{{set}}` sets one key. For a nested property, pass the nested object:
+`{{set}}` sets one key. It throws when you call it with a key that has a dot.
+For a nested property, pass the nested object:
 
 ```hbs
 <button {{on "click" (set this.user "name" "Liz")}}>Set name</button>
@@ -103,15 +105,23 @@ tracked state, or belongs to a tracked object such as `TrackedObject`.
 
 If the path is dynamic, use `setPath` (`{{set-path}}` in a loose-mode
 template). It reads each object on the path and assigns the last key. It throws
-if an object on the path is `null` or `undefined`, or if the path contains
-`__proto__`, `constructor` or `prototype`:
+if a value on the path is not an object (for example `undefined` or a function),
+or if the path contains `__proto__`:
 
-```js
+```gjs
+import { concat } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { setPath } from 'ember-set-helper';
+
+<template>
+  <button {{on "click" (setPath @form (concat "user." @field) "Liz")}}>
+    Set
+  </button>
+</template>
 ```
 
 ```hbs
-<button {{on "click" (setPath this (concat "user." this.field) "Liz")}}>
+<button {{on "click" (set-path @form (concat "user." @field) "Liz")}}>
   Set
 </button>
 ```
@@ -122,13 +132,17 @@ v3 used `set` from `@ember/object`. v4 assigns with plain JavaScript:
 
 - A property that is not tracked no longer updates the template. Make it
   `@tracked`.
-- `{{set}}` takes one key. A nested path (`{{set this "user.name"}}`) throws.
-  Pass the nested object (`{{set this.user "name"}}`), or use `setPath`.
-- Classic `EmberObject` observers and computed properties do not run.
+- `{{set}}` takes one key. A nested path (`{{set this "user.name"}}`) throws
+  when it is called. Pass the nested object (`{{set this.user "name"}}`), or use
+  `setPath`.
+- Classic observers do not run, and a computed property that depends on a
+  property that is not tracked does not recompute. A computed property with a
+  setter still runs its setter.
 - Proxies (`ObjectProxy`, `PromiseProxyMixin`, such as an async `belongsTo`) and
   objects with `setUnknownProperty`, such as a classic changeset, do not forward
-  the value. It is set on the wrapper. Set the content directly, or write an
-  action that calls `set` from `@ember/object`.
+  the value, also when they are on a `setPath` path. The value is set on the
+  wrapper. Set the content directly, or write an action that calls `set` from
+  `@ember/object`.
 
 ### Picking values with `ember-composable-helpers`
 

@@ -219,13 +219,11 @@ module('Integration | Helper | set', function (hooks) {
     assert.strictEqual(set(person, 'name')('Bob'), 'Bob');
   });
 
-  test('it throws on a nested path', function (assert) {
+  test('it throws on a nested path when it is called', function (assert) {
     const person = new Person();
+    // @ts-expect-error: a nested path is not a key of person
+    const setFirstName = set(person, 'name.first', 'Liz');
 
-    assert.throws(
-      // @ts-expect-error: a nested path is not a key of person
-      () => set(person, 'name.first', 'Liz'),
-      /Use setPath .* for a nested path/,
-    );
+    assert.throws(setFirstName, /Use setPath .* for a nested path/);
   });
 });
