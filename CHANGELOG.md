@@ -1,5 +1,20 @@
 # Changelog
 
+## Release (2026-11-09)
+
+* ember-set-helper 4.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-set-helper`
+  * [#79](https://github.com/adopted-ember-addons/ember-set-helper/pull/79) Use plain assignment in set, and add setPath for nested paths (breaking) ([@johanrd](https://github.com/johanrd))
+
+#### :house: Internal
+* `ember-set-helper`
+  * [#83](https://github.com/adopted-ember-addons/ember-set-helper/pull/83) Regenerate from @ember/addon-blueprint and update all dependencies ([@johanrd](https://github.com/johanrd))
+
+#### Committers: 1
+- Johan Røed ([@johanrd](https://github.com/johanrd))
+
 ## Release (2025-10-04)
 
 ember-set-helper 3.1.0 (minor)
