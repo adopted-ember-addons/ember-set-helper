@@ -103,6 +103,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
+      "./helpers/set-path.js": "./dist/_app_/helpers/set-path.js",
       "./helpers/set.js": "./dist/_app_/helpers/set.js"
     }
   },
