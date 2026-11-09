@@ -1,22 +1,17 @@
 {
   "solution": {
     "ember-set-helper": {
-      "impact": "major",
-      "oldVersion": "3.1.0",
-      "newVersion": "4.0.0",
-      "tagName": "latest",
+      "impact": "minor",
+      "oldVersion": "3.0.1",
+      "newVersion": "3.1.0",
       "constraints": [
         {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
-      "pkgJSONPath": "./package.json"
+      "pkgJSONPath": "./ember-set-helper/package.json"
     }
   },
-  "description": "## Release (2026-11-09)\n\n* ember-set-helper 4.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-set-helper`\n  * [#79](https://github.com/adopted-ember-addons/ember-set-helper/pull/79) Use plain assignment in set, and add setPath for nested paths (breaking) ([@johanrd](https://github.com/johanrd))\n\n#### :house: Internal\n* `ember-set-helper`\n  * [#83](https://github.com/adopted-ember-addons/ember-set-helper/pull/83) Regenerate from @ember/addon-blueprint and update all dependencies ([@johanrd](https://github.com/johanrd))\n\n#### Committers: 1\n- Johan Røed ([@johanrd](https://github.com/johanrd))\n"
+  "description": "## Release (2025-10-04)\n\nember-set-helper 3.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-set-helper`\n  * [#80](https://github.com/adopted-ember-addons/ember-set-helper/pull/80) feat: add index re-export ([@aklkv](https://github.com/aklkv))\n\n#### :memo: Documentation\n* [#82](https://github.com/adopted-ember-addons/ember-set-helper/pull/82) Update README.md with index re-export example for strict mode ([@SergeAstapov](https://github.com/SergeAstapov))\n* [#74](https://github.com/adopted-ember-addons/ember-set-helper/pull/74) Update README.md with strict mode import example ([@johanrd](https://github.com/johanrd))\n\n#### Committers: 3\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n- Sergey Astapov ([@SergeAstapov](https://github.com/SergeAstapov))\n- [@johanrd](https://github.com/johanrd)\n"
 }
