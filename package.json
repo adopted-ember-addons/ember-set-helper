@@ -95,6 +95,10 @@
     "typescript-eslint": "^8.72.1",
     "vite": "^8.3.6"
   },
+  "packageManager": "pnpm@12.18.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "ember": {
     "edition": "octane"
   },
@@ -106,9 +110,5 @@
       "./helpers/set-path.js": "./dist/_app_/helpers/set-path.js",
       "./helpers/set.js": "./dist/_app_/helpers/set.js"
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
-  "packageManager": "pnpm@12.18.0"
+  }
 }
